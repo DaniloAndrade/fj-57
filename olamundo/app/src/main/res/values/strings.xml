@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">olamundo</string>
     <string name="olamundo">Ola mundo!</string>
+    <string name="diga">Diga!</string>
 </resources>
