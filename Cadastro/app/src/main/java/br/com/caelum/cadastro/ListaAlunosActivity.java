@@ -47,6 +47,16 @@ public class ListaAlunosActivity extends ActionBarActivity {
                 return true;
             }
         });
+
+
+        View botaoAdicionar = findViewById(R.id.list_alunos_floating_button);
+
+        botaoAdicionar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(ListaAlunosActivity.this,"Floating button clicado",Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
 
