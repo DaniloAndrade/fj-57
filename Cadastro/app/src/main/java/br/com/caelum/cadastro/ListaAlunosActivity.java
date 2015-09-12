@@ -15,19 +15,34 @@ import android.widget.Toast;
 import java.util.Arrays;
 import java.util.List;
 
+import br.com.caelum.cadastro.dao.AlunoDAO;
+import br.com.caelum.cadastro.modelo.Aluno;
+
 
 public class ListaAlunosActivity extends ActionBarActivity {
+
+    private ListView listViewAlunos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_alunos);
-        List<String> alunos = Arrays.asList("João", "Maria", "Chicó");
-        ListView listViewAlunos = (ListView) findViewById(R.id.list_alunos);
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,alunos);
-        listViewAlunos.setAdapter(arrayAdapter);
+
+        listViewAlunos = (ListView) findViewById(R.id.list_alunos);
+        addListenerListView(listViewAlunos);
 
 
+        View botaoNovo = findViewById(R.id.lista_alunos_floating_button);
+        botaoNovo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ListaAlunosActivity.this, FormularioActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void addListenerListView(ListView listViewAlunos) {
         listViewAlunos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -48,17 +63,21 @@ public class ListaAlunosActivity extends ActionBarActivity {
                 return true;
             }
         });
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        carregarAlunos(listViewAlunos);
+    }
 
-        View botaoNovo = findViewById(R.id.lista_alunos_floating_button);
-        botaoNovo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Toast.makeText(ListaAlunosActivity.this,"Floating button clicado",Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(ListaAlunosActivity.this, FormularioActivity.class);
-                startActivity(intent);
-            }
-        });
+    private void carregarAlunos(ListView listViewAlunos) {
+        AlunoDAO alunoDAO = new AlunoDAO(this);
+        List<Aluno> alunos = alunoDAO.getLista();
+        ArrayAdapter<Aluno> arrayAdapter =
+                new ArrayAdapter<Aluno>(this,android.R.layout.simple_list_item_1,alunos);
+        listViewAlunos.setAdapter(arrayAdapter);
+        alunoDAO.close();
     }
 
 
