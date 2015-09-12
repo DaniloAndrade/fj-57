@@ -7,12 +7,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import br.com.caelum.cadastro.dao.AlunoDAO;
+import br.com.caelum.cadastro.helper.FormularioHelper;
+import br.com.caelum.cadastro.modelo.Aluno;
+
 public class FormularioActivity extends ActionBarActivity {
+
+    private FormularioHelper helper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulario);
+        helper = new FormularioHelper(this);
     }
 
     @Override
@@ -26,8 +33,23 @@ public class FormularioActivity extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.menu_formulario_ok:
-                Toast.makeText(this,"Ok clicado", Toast.LENGTH_LONG).show();
-                finish();
+
+
+                if(helper.estaValido()){
+                    Aluno aluno = helper.pegaAlunoDoFormulario();
+
+                    AlunoDAO alunoDAO = new AlunoDAO(this);
+                    alunoDAO.adiciona(aluno);
+                    alunoDAO.close();
+
+                    finish();
+                } else{
+                    helper.mostrarErros();
+                }
+
+
+
+
                 return false;
 
             default:
