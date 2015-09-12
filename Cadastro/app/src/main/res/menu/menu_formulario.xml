@@ -2,6 +2,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="br.com.caelum.cadastro.FormularioActivity">
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="100" app:showAsAction="never" />
+
+    <item android:id="@+id/menu_formulario_ok"
+        android:icon="@drawable/ic_confirmar"
+        app:showAsAction="always"
+        android:title="ok"/>
 </menu>
