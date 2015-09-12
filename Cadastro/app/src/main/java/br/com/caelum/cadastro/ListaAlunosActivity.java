@@ -1,5 +1,6 @@
 package br.com.caelum.cadastro;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -45,6 +46,17 @@ public class ListaAlunosActivity extends ActionBarActivity {
                         ListaAlunosActivity.this, "Clicou longo no aluno: " + parent.getItemAtPosition(position).toString(),
                         Toast.LENGTH_SHORT).show();
                 return true;
+            }
+        });
+
+
+        View botaoNovo = findViewById(R.id.lista_alunos_floating_button);
+        botaoNovo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(ListaAlunosActivity.this,"Floating button clicado",Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(ListaAlunosActivity.this, FormularioActivity.class);
+                startActivity(intent);
             }
         });
     }
