@@ -13,5 +13,6 @@
     <string name="site">Site</string>
     <string name="salvar">Salvar</string>
     <string name="email">Email</string>
+    <string name="title_activity_lista_alunos_recycler">ListaAlunosRecyclerActivity</string>
 
 </resources>
