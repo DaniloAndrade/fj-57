@@ -19,9 +19,9 @@ public class AlunoDAO extends SQLiteOpenHelper{
 
 
     public static final String DATABASE = "CadastroCaelum";
-    public static final int VERSION = 1;
+    public static final int VERSION = 2;
     private static final String ALUNOS = "ALUNOS";
-    public static final String TB_ALUNOS = "CREATE TABLE " + ALUNOS + " (id INTEGER PRIMARY KEY, nome TEXT NOT NULL, telefone TEXT, email TEXT, endereco TEXT, site TEXT, nota REAL);";
+    public static final String TB_ALUNOS = "CREATE TABLE " + ALUNOS + " (id INTEGER PRIMARY KEY, nome TEXT NOT NULL, telefone TEXT, email TEXT, endereco TEXT, site TEXT, nota REAL, caminhoFoto TEXT);";
 
     public AlunoDAO(Context context) {
         super(context, DATABASE,null, VERSION);
@@ -34,9 +34,8 @@ public class AlunoDAO extends SQLiteOpenHelper{
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        String sql = "DROP TABLE IF EXISTS " + ALUNOS;
-        db.execSQL(sql);
-        onCreate(db);
+        String upgrade = "ALTER TABLE " + ALUNOS + " ADD COLUMN caminhoFoto TEXT;";
+        db.execSQL(upgrade);
     }
 
 
@@ -48,6 +47,7 @@ public class AlunoDAO extends SQLiteOpenHelper{
         values.put("endereco",aluno.getEndereco());
         values.put("site",aluno.getSite());
         values.put("nota",aluno.getNota());
+        values.put("caminhoFoto", aluno.getCaminhoFoto());
 
         getWritableDatabase().insert(ALUNOS,null,values);
     }
@@ -67,6 +67,7 @@ public class AlunoDAO extends SQLiteOpenHelper{
                 aluno.setEmail(cursor.getString(cursor.getColumnIndex("email")));
                 aluno.setSite(cursor.getString(cursor.getColumnIndex("site")));
                 aluno.setNota(cursor.getDouble(cursor.getColumnIndex("nota")));
+                aluno.setCaminhoFoto(cursor.getString(cursor.getColumnIndex("caminhoFoto")));
 
                 alunos.add(aluno);
             }
@@ -75,11 +76,7 @@ public class AlunoDAO extends SQLiteOpenHelper{
                 cursor.close();
             }
         }
-
-
-
         return alunos;
-
     }
 
 
@@ -89,8 +86,6 @@ public class AlunoDAO extends SQLiteOpenHelper{
     }
 
     public void alterar(Aluno aluno){
-
-
         ContentValues values = new ContentValues();
         values.put("nome",aluno.getNome());
         values.put("telefone",aluno.getTelefone());
@@ -98,9 +93,7 @@ public class AlunoDAO extends SQLiteOpenHelper{
         values.put("endereco",aluno.getEndereco());
         values.put("site",aluno.getSite());
         values.put("nota",aluno.getNota());
-
-
-
+        values.put("caminhoFoto",aluno.getCaminhoFoto());
         getWritableDatabase().update(ALUNOS,values,"id=?",new String[]{aluno.getId().toString()});
     }
 

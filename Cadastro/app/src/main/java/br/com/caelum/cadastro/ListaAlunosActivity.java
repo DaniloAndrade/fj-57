@@ -3,6 +3,7 @@ package br.com.caelum.cadastro;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -100,8 +101,72 @@ public class ListaAlunosActivity extends ActionBarActivity {
 
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuItem deletar = menu.add("Deletar");
-        MenuItem ligar = menu.add("Ligar");
+        final MenuItem ligar = menu.add("Ligar");
+        final MenuItem sms = menu.add("SMS");
+        final MenuItem site = menu.add("Site");
+        final MenuItem mapa = menu.add("Mapa");
 
+        aluno.executeSeTemTelefone(new Aluno.ListenerForAluno() {
+            @Override
+            public void execute() {
+                configuraAcaoParaLigar(aluno, ligar);
+                configuraAcaoParaSMS(aluno, sms);
+            }
+        });
+
+        aluno.executeSeTemEndereco(new Aluno.ListenerForAluno() {
+            @Override
+            public void execute() {
+                configuraAcaoParaMapa(aluno, mapa);
+            }
+        });
+
+        aluno.executeSeTemSite(new Aluno.ListenerForAluno() {
+            @Override
+            public void execute() {
+                configuraAcaoParaSite(aluno, site);
+            }
+        });
+        configuraListenerParaDeletar(aluno, deletar);
+
+
+
+
+
+
+
+    }
+
+    private void configuraAcaoParaSMS(Aluno aluno, MenuItem sms) {
+        Intent intentParaSms = new Intent(Intent.ACTION_VIEW);
+        intentParaSms.setData(Uri.parse("sms:" + aluno.getTelefone()));
+        sms.setIntent(intentParaSms);
+    }
+
+    private void configuraAcaoParaMapa(Aluno aluno, MenuItem mapa) {
+        Intent intentParaSms = new Intent(Intent.ACTION_VIEW);
+        intentParaSms.setData(Uri.parse("geo:0,0?z=14&q=" + aluno.getEndereco()));
+        mapa.setIntent(intentParaSms);
+    }
+
+
+    private void configuraAcaoParaSite(Aluno aluno, MenuItem site) {
+        Intent intentParaSite = new Intent(Intent.ACTION_VIEW);
+        String siteAluno = aluno.getSite();
+        if(!siteAluno.startsWith("http://")){
+            siteAluno = "http://"+site;
+        }
+        intentParaSite.setData(Uri.parse(siteAluno));
+        site.setIntent(intentParaSite);
+    }
+
+    private void configuraAcaoParaLigar(Aluno aluno, MenuItem ligar) {
+        Intent intentParaLigar= new Intent(Intent.ACTION_CALL);
+        intentParaLigar.setData(Uri.parse("tel:" + aluno.getTelefone()));
+        ligar.setIntent(intentParaLigar);
+    }
+
+    private void configuraListenerParaDeletar(final Aluno aluno, MenuItem deletar) {
         deletar.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {

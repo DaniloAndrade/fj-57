@@ -15,6 +15,7 @@ public class Aluno implements Serializable{
     private String site;
     private Double nota;
     private String email;
+    private String caminhoFoto;
 
 
     public String getNome() {
@@ -73,6 +74,14 @@ public class Aluno implements Serializable{
         return email;
     }
 
+    public String getCaminhoFoto() {
+        return caminhoFoto;
+    }
+
+    public void setCaminhoFoto(String caminhoFoto) {
+        this.caminhoFoto = caminhoFoto;
+    }
+
     @Override
     public String toString() {
         return "Aluno{" +
@@ -84,5 +93,34 @@ public class Aluno implements Serializable{
                 ", nota=" + nota +
                 ", email='" + email + '\'' +
                 '}';
+    }
+
+    public interface ListenerForAluno{
+        public void execute();
+    }
+
+
+    public void executeSeTemEmail(ListenerForAluno listener){
+        if(email != null && !email.isEmpty()){
+            listener.execute();
+        }
+    }
+
+    public void executeSeTemTelefone(ListenerForAluno listener){
+        if(telefone != null && !telefone.isEmpty()){
+            listener.execute();
+        }
+    }
+
+    public void executeSeTemSite(ListenerForAluno listener){
+        if(site != null && !site.isEmpty()){
+            listener.execute();
+        }
+    }
+
+    public void executeSeTemEndereco(ListenerForAluno listener){
+        if(endereco != null && !endereco.isEmpty()){
+            listener.execute();
+        }
     }
 }

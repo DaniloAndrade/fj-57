@@ -1,7 +1,11 @@
 package br.com.caelum.cadastro.helper;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 
 import br.com.caelum.cadastro.FormularioActivity;
@@ -22,6 +26,8 @@ public class FormularioHelper {
     private final EditText endereco;
     private final EditText telefone;
     private final EditText nome;
+    private final ImageView foto;
+    private final Button fotoButton;
 
     public FormularioHelper(FormularioActivity formularioActivity) {
         this.formularioActivity = formularioActivity;
@@ -29,6 +35,8 @@ public class FormularioHelper {
         telefone = (EditText) formularioActivity.findViewById(R.id.formulario_telefone);
         endereco = (EditText) formularioActivity.findViewById(R.id.formulario_endereco);
         email = (EditText) formularioActivity.findViewById(R.id.formulario_email);
+        foto = (ImageView) formularioActivity.findViewById(R.id.formulario_foto);
+        fotoButton = (Button) formularioActivity.findViewById(R.id.formulario_foto_button);
 
         site = (EditText) formularioActivity.findViewById(R.id.formulario_site);
         nota = (RatingBar) formularioActivity.findViewById(R.id.formulario_nota);
@@ -42,6 +50,7 @@ public class FormularioHelper {
         aluno.setEmail(email.getText().toString());
         aluno.setSite(site.getText().toString());
         aluno.setNota((double) nota.getRating());
+        aluno.setCaminhoFoto((String) foto.getTag());
 
         return aluno;
     }
@@ -61,9 +70,26 @@ public class FormularioHelper {
         telefone.setText(alunoSelecionado.getTelefone());
         endereco.setText(alunoSelecionado.getEndereco());
         email.setText(alunoSelecionado.getEmail());
-
         site.setText(alunoSelecionado.getSite());
         nota.setRating(alunoSelecionado.getNota().floatValue());
+        carregarImagem(alunoSelecionado.getCaminhoFoto());
+
         aluno = alunoSelecionado;
+    }
+
+    public Button getFotoButton() {
+        return fotoButton;
+    }
+
+    public void carregarImagem(String localArquivoFoto) {
+
+        if (localArquivoFoto !=null && !localArquivoFoto.isEmpty()){
+            Bitmap imagemFoto = BitmapFactory.decodeFile(localArquivoFoto);
+            Bitmap imagemFotoReduzida = Bitmap.createScaledBitmap(imagemFoto, imagemFoto.getWidth(), 300, true);
+            foto.setImageBitmap(imagemFotoReduzida);
+            foto.setTag(localArquivoFoto);
+            foto.setScaleType(ImageView.ScaleType.FIT_XY);
+        }
+
     }
 }
