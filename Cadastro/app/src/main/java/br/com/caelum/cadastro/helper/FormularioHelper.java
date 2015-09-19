@@ -15,7 +15,7 @@ public class FormularioHelper {
 
 
     private FormularioActivity formularioActivity;
-    private final Aluno aluno;
+    private Aluno aluno;
     private final EditText email;
     private final RatingBar nota;
     private final EditText site;
@@ -54,5 +54,16 @@ public class FormularioHelper {
 
     public void mostrarErros() {
         nome.setError("Campo nome não pode ser vazio");
+    }
+
+    public void colocaNoFormulario(Aluno alunoSelecionado) {
+        nome.setText(alunoSelecionado.getNome());
+        telefone.setText(alunoSelecionado.getTelefone());
+        endereco.setText(alunoSelecionado.getEndereco());
+        email.setText(alunoSelecionado.getEmail());
+
+        site.setText(alunoSelecionado.getSite());
+        nota.setRating(alunoSelecionado.getNota().floatValue());
+        aluno = alunoSelecionado;
     }
 }

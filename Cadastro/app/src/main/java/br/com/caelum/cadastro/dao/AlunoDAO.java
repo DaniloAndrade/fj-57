@@ -54,23 +54,62 @@ public class AlunoDAO extends SQLiteOpenHelper{
 
     public List<Aluno> getLista() {
         List<Aluno> alunos = new ArrayList();
+        Cursor cursor = null;
+        try {
+            cursor = getReadableDatabase().rawQuery("SELECT * FROM " + ALUNOS + ";", null);
+            while (cursor.moveToNext()){
+                Aluno aluno = new Aluno();
+                aluno.setId(cursor.getLong(cursor.getColumnIndex("id")));
+                aluno.setNome(cursor.getString(cursor.getColumnIndex("nome")));
+                aluno.setTelefone(cursor.getString(cursor.getColumnIndex("telefone")));
+                aluno.setEndereco(cursor.getString(cursor.getColumnIndex("endereco")));
 
-        Cursor cursor = getReadableDatabase().rawQuery("SELECT * FROM " + ALUNOS + ";", null);
-        while (cursor.moveToNext()){
-            Aluno aluno = new Aluno();
-            aluno.setId(cursor.getLong(cursor.getColumnIndex("id")));
-            aluno.setNome(cursor.getString(cursor.getColumnIndex("nome")));
-            aluno.setTelefone(cursor.getString(cursor.getColumnIndex("telefone")));
-            aluno.setEndereco(cursor.getString(cursor.getColumnIndex("endereco")));
+                aluno.setEmail(cursor.getString(cursor.getColumnIndex("email")));
+                aluno.setSite(cursor.getString(cursor.getColumnIndex("site")));
+                aluno.setNota(cursor.getDouble(cursor.getColumnIndex("nota")));
 
-            aluno.setEmail(cursor.getString(cursor.getColumnIndex("email")));
-            aluno.setSite(cursor.getString(cursor.getColumnIndex("site")));
-            aluno.setNota(cursor.getDouble(cursor.getColumnIndex("nota")));
-            
-            alunos.add(aluno);
+                alunos.add(aluno);
+            }
+        }finally {
+            if (cursor != null) {
+                cursor.close();
+            }
         }
+
+
 
         return alunos;
 
+    }
+
+
+    public void deletar(Aluno aluno){
+        String[] params = {aluno.getId().toString()};
+        getWritableDatabase().delete(ALUNOS,"id=?",params);
+    }
+
+    public void alterar(Aluno aluno){
+
+
+        ContentValues values = new ContentValues();
+        values.put("nome",aluno.getNome());
+        values.put("telefone",aluno.getTelefone());
+        values.put("email",aluno.getEmail());
+        values.put("endereco",aluno.getEndereco());
+        values.put("site",aluno.getSite());
+        values.put("nota",aluno.getNota());
+
+
+
+        getWritableDatabase().update(ALUNOS,values,"id=?",new String[]{aluno.getId().toString()});
+    }
+
+
+    public void adicionaOuAltera(Aluno aluno){
+        if (aluno.getId() != null){
+            alterar(aluno);
+        }else {
+            adiciona(aluno);
+        }
     }
 }

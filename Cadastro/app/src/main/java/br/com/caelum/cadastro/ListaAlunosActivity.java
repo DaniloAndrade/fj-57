@@ -1,9 +1,12 @@
 package br.com.caelum.cadastro;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,9 +21,12 @@ import java.util.List;
 import br.com.caelum.cadastro.dao.AlunoDAO;
 import br.com.caelum.cadastro.modelo.Aluno;
 
+import static android.widget.AdapterView.*;
+
 
 public class ListaAlunosActivity extends ActionBarActivity {
 
+    public static final String ALUNO_SELECIONADO = "alunoSelecionado";
     private ListView listViewAlunos;
 
     @Override
@@ -30,6 +36,7 @@ public class ListaAlunosActivity extends ActionBarActivity {
 
         listViewAlunos = (ListView) findViewById(R.id.list_alunos);
         addListenerListView(listViewAlunos);
+        registerForContextMenu(listViewAlunos);
 
 
         View botaoNovo = findViewById(R.id.lista_alunos_floating_button);
@@ -43,24 +50,29 @@ public class ListaAlunosActivity extends ActionBarActivity {
     }
 
     private void addListenerListView(ListView listViewAlunos) {
-        listViewAlunos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listViewAlunos.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.i("CLICK ITEM LIST", "Clicou no aluno: " + parent.getItemAtPosition(position).toString());
+                Aluno alunoSelecionado = (Aluno) parent.getItemAtPosition(position);
+                Log.i("CLICK ITEM LIST", "Clicou no aluno: " + alunoSelecionado.toString());
                 Toast.makeText(
                         ListaAlunosActivity.this, "Clicou no aluno: " + parent.getItemAtPosition(position).toString(),
                         Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(ListaAlunosActivity.this, FormularioActivity.class);
+                intent.putExtra(ALUNO_SELECIONADO,alunoSelecionado);
+                startActivity(intent);
             }
         });
 
-        listViewAlunos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        listViewAlunos.setOnItemLongClickListener(new OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.i("CLICK LONGO ITEM LIST", "Clicou longo no aluno: " + parent.getItemAtPosition(position).toString());
                 Toast.makeText(
                         ListaAlunosActivity.this, "Clicou longo no aluno: " + parent.getItemAtPosition(position).toString(),
                         Toast.LENGTH_SHORT).show();
-                return true;
+                return false;
             }
         });
     }
@@ -80,6 +92,39 @@ public class ListaAlunosActivity extends ActionBarActivity {
         alunoDAO.close();
     }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, final ContextMenu.ContextMenuInfo menuInfo) {
+
+        AdapterContextMenuInfo contextMenuInfo = (AdapterContextMenuInfo) menuInfo;
+        final Aluno aluno = (Aluno) listViewAlunos.getItemAtPosition(contextMenuInfo.position);
+
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuItem deletar = menu.add("Deletar");
+        MenuItem ligar = menu.add("Ligar");
+
+        deletar.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                new AlertDialog.Builder(ListaAlunosActivity.this)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setTitle("Deletar")
+                        .setMessage("Deseja mesmo deletar?")
+                        .setPositiveButton("Quero",new DialogInterface.OnClickListener(){
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                AlunoDAO alunoDAO = new AlunoDAO(ListaAlunosActivity.this);
+                                alunoDAO.deletar(aluno);
+
+                                carregarAlunos(listViewAlunos);
+                                alunoDAO.close();
+                            }
+                        }).setNegativeButton("Não",null).show();
+
+
+                return false;
+            }
+        });
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

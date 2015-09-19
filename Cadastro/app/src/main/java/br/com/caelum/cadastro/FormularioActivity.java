@@ -7,6 +7,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import java.io.Serializable;
+
 import br.com.caelum.cadastro.dao.AlunoDAO;
 import br.com.caelum.cadastro.helper.FormularioHelper;
 import br.com.caelum.cadastro.modelo.Aluno;
@@ -20,6 +22,12 @@ public class FormularioActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulario);
         helper = new FormularioHelper(this);
+        Aluno alunoSelecionado = (Aluno) getIntent().getSerializableExtra(ListaAlunosActivity.ALUNO_SELECIONADO);
+
+        if(alunoSelecionado != null){
+            helper.colocaNoFormulario(alunoSelecionado);
+        }
+
     }
 
     @Override
@@ -36,10 +44,9 @@ public class FormularioActivity extends ActionBarActivity {
 
 
                 if(helper.estaValido()){
-                    Aluno aluno = helper.pegaAlunoDoFormulario();
-
                     AlunoDAO alunoDAO = new AlunoDAO(this);
-                    alunoDAO.adiciona(aluno);
+                    Aluno aluno = helper.pegaAlunoDoFormulario();
+                    alunoDAO.adicionaOuAltera(aluno);
                     alunoDAO.close();
 
                     finish();
