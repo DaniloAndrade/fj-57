@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 
+import br.com.caelum.cadastro.ListaAlunosActivity;
 import br.com.caelum.cadastro.dao.AlunoDAO;
 import br.com.caelum.cadastro.modelo.Aluno;
 
@@ -14,40 +15,48 @@ import br.com.caelum.cadastro.modelo.Aluno;
  * Created by android5243 on 19/09/15.
  */
 public class ContextActionBar implements ActionMode.Callback {
+
+    private final ListaAlunosActivity activity;
+    private final Aluno aluno;
+
+    public ContextActionBar(ListaAlunosActivity activity, Aluno aluno) {
+        this.activity = activity;
+        this.aluno = aluno;
+    }
+
     @Override
-    public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
+    public boolean onCreateActionMode(final ActionMode actionMode, Menu menu) {
         MenuItem deletar = menu.add("Deletar");
         MenuItem ligar = menu.add("Ligar");
         menu.add("SMS");
 
 
-        /*AdapterView.AdapterContextMenuInfo contextMenuInfo = (AdapterView.AdapterContextMenuInfo) menuInfo;
-        final Aluno aluno = (Aluno) listViewAlunos.getItemAtPosition(contextMenuInfo.position);
 
 
 
         deletar.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                new AlertDialog.Builder(ListaAlunosActivity.this)
+                new AlertDialog.Builder(activity)
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .setTitle("Deletar")
                         .setMessage("Deseja mesmo deletar?")
-                        .setPositiveButton("Quero",new DialogInterface.OnClickListener(){
+                        .setPositiveButton("Quero", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                AlunoDAO alunoDAO = new AlunoDAO(ListaAlunosActivity.this);
+                                AlunoDAO alunoDAO = new AlunoDAO(activity);
                                 alunoDAO.deletar(aluno);
-
-                                carregarAlunos(listViewAlunos);
                                 alunoDAO.close();
+
+                                activity.carregarAlunos();
+                                actionMode.finish();
                             }
-                        }).setNegativeButton("Não",null).show();
+                        }).setNegativeButton("Não", null).show();
 
 
                 return false;
             }
-        });*/
+        });
 
 
 
