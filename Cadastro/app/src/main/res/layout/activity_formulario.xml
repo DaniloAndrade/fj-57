@@ -41,6 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:capitalize="words"
             android:hint="@string/nome" />
 
         <EditText
@@ -48,6 +49,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:inputType="phone"
+            android:digits="0123456789+"
             android:hint="@string/telefone" />
 
         <EditText
@@ -62,12 +65,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:inputType="textUri"
             android:hint="@string/site" />
         <EditText
             android:id="@+id/formulario_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:inputType="textEmailAddress"
             android:hint="@string/email" />
 
         <RatingBar

@@ -16,9 +16,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.util.Arrays;
 import java.util.List;
 
+import br.com.caelum.cadastro.context.action.ContextActionBar;
 import br.com.caelum.cadastro.dao.AlunoDAO;
 import br.com.caelum.cadastro.modelo.Aluno;
 
@@ -69,10 +69,13 @@ public class ListaAlunosActivity extends ActionBarActivity {
         listViewAlunos.setOnItemLongClickListener(new OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.i("CLICK LONGO ITEM LIST", "Clicou longo no aluno: " + parent.getItemAtPosition(position).toString());
-                Toast.makeText(
-                        ListaAlunosActivity.this, "Clicou longo no aluno: " + parent.getItemAtPosition(position).toString(),
-                        Toast.LENGTH_SHORT).show();
+//                Aluno alunoSelecionado = (Aluno) parent.getItemAtPosition(position);
+//                Log.i("CLICK LONGO ITEM LIST", "Clicou longo no aluno: " + alunoSelecionado.toString());
+//                Toast.makeText(
+//                        ListaAlunosActivity.this, "Clicou longo no aluno: " + alunoSelecionado.toString(),
+//                        Toast.LENGTH_SHORT).show();
+
+
                 return false;
             }
         });
@@ -81,10 +84,10 @@ public class ListaAlunosActivity extends ActionBarActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        carregarAlunos(listViewAlunos);
+        carregarAlunos();
     }
 
-    private void carregarAlunos(ListView listViewAlunos) {
+    public void carregarAlunos() {
         AlunoDAO alunoDAO = new AlunoDAO(this);
         List<Aluno> alunos = alunoDAO.getLista();
         ArrayAdapter<Aluno> arrayAdapter =
@@ -156,7 +159,7 @@ public class ListaAlunosActivity extends ActionBarActivity {
         Intent intentParaSite = new Intent(Intent.ACTION_VIEW);
         String siteAluno = aluno.getSite();
         if(!siteAluno.startsWith("http://")){
-            siteAluno = "http://"+site;
+            siteAluno = "http://"+siteAluno;
         }
         intentParaSite.setData(Uri.parse(siteAluno));
         site.setIntent(intentParaSite);
@@ -182,7 +185,7 @@ public class ListaAlunosActivity extends ActionBarActivity {
                                 AlunoDAO alunoDAO = new AlunoDAO(ListaAlunosActivity.this);
                                 alunoDAO.deletar(aluno);
 
-                                carregarAlunos(listViewAlunos);
+                                carregarAlunos();
                                 alunoDAO.close();
                             }
                         }).setNegativeButton("Não",null).show();
