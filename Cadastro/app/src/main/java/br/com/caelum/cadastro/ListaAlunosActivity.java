@@ -94,21 +94,21 @@ public class ListaAlunosActivity extends ActionBarActivity {
     }
 
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, final ContextMenu.ContextMenuInfo menuInfo) {
+    public void onCreateContextMenu(final ContextMenu menu, View v, final ContextMenu.ContextMenuInfo menuInfo) {
 
         AdapterContextMenuInfo contextMenuInfo = (AdapterContextMenuInfo) menuInfo;
         final Aluno aluno = (Aluno) listViewAlunos.getItemAtPosition(contextMenuInfo.position);
 
         super.onCreateContextMenu(menu, v, menuInfo);
-        MenuItem deletar = menu.add("Deletar");
-        final MenuItem ligar = menu.add("Ligar");
-        final MenuItem sms = menu.add("SMS");
-        final MenuItem site = menu.add("Site");
-        final MenuItem mapa = menu.add("Mapa");
+        final MenuItem deletar = menu.add("Deletar");
+
+
 
         aluno.executeSeTemTelefone(new Aluno.ListenerForAluno() {
             @Override
             public void execute() {
+                final MenuItem ligar = menu.add("Ligar");
+                final MenuItem sms = menu.add("SMS");
                 configuraAcaoParaLigar(aluno, ligar);
                 configuraAcaoParaSMS(aluno, sms);
             }
@@ -117,6 +117,7 @@ public class ListaAlunosActivity extends ActionBarActivity {
         aluno.executeSeTemEndereco(new Aluno.ListenerForAluno() {
             @Override
             public void execute() {
+                final MenuItem mapa = menu.add("Mapa");
                 configuraAcaoParaMapa(aluno, mapa);
             }
         });
@@ -124,6 +125,7 @@ public class ListaAlunosActivity extends ActionBarActivity {
         aluno.executeSeTemSite(new Aluno.ListenerForAluno() {
             @Override
             public void execute() {
+                final MenuItem site = menu.add("Site");
                 configuraAcaoParaSite(aluno, site);
             }
         });
