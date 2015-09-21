@@ -132,6 +132,16 @@ public class ListaAlunosActivity extends ActionBarActivity {
                 configuraAcaoParaSite(aluno, site);
             }
         });
+
+
+        aluno.executeSeTemEmail(new Aluno.ListenerForAluno() {
+            @Override
+            public void execute() {
+                final MenuItem email = menu.add("Enviar E-mail");
+                configuraAcaoParaEmail(aluno, email);
+            }
+        });
+
         configuraListenerParaDeletar(aluno, deletar);
 
 
@@ -163,6 +173,15 @@ public class ListaAlunosActivity extends ActionBarActivity {
         }
         intentParaSite.setData(Uri.parse(siteAluno));
         site.setIntent(intentParaSite);
+    }
+
+    private void configuraAcaoParaEmail(Aluno aluno, MenuItem site) {
+        Intent intentEmail = new Intent(Intent.ACTION_SEND);
+        intentEmail.setType("message/rfc822");
+        intentEmail.putExtra(Intent.EXTRA_EMAIL, new String[]{aluno.getEmail()});
+        intentEmail.putExtra(Intent.EXTRA_SUBJECT,"Curso de Android");
+        intentEmail.putExtra(Intent.EXTRA_TEXT,"Este curso é ótimo");
+        site.setIntent(intentEmail);
     }
 
     private void configuraAcaoParaLigar(Aluno aluno, MenuItem ligar) {
