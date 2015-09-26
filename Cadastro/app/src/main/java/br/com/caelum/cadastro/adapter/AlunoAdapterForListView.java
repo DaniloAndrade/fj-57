@@ -52,6 +52,8 @@ public class AlunoAdapterForListView extends BaseAdapter {
 
         TextView nome = (TextView) view.findViewById(R.id.item_nome);
         ImageView foto = (ImageView) view.findViewById(R.id.item_foto);
+        TextView email = (TextView) view.findViewById(R.id.item_email);
+        TextView telefone = (TextView) view.findViewById(R.id.item_telefone);
 
 
         nome.setText(aluno.getNome());
@@ -73,6 +75,15 @@ public class AlunoAdapterForListView extends BaseAdapter {
         }else {
             view.setBackgroundColor(context.getResources().getColor(R.color.linha_impar));
         }
+
+        if(email != null ){
+            email.setText(aluno.getEmail());
+        }
+
+        if(telefone != null ){
+            telefone.setText(aluno.getTelefone());
+        }
+
         return view;
     }
 }
