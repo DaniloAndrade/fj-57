@@ -11,16 +11,23 @@ import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
+import br.com.caelum.cadastro.adapter.AlunoAdapterForListView;
 import br.com.caelum.cadastro.context.action.ContextActionBar;
+import br.com.caelum.cadastro.converter.AlunoConverter;
 import br.com.caelum.cadastro.dao.AlunoDAO;
 import br.com.caelum.cadastro.modelo.Aluno;
+import br.com.caelum.cadastro.support.WebClient;
+import br.com.caelum.cadastro.tasks.EnviaAlunoTask;
 
 import static android.widget.AdapterView.*;
 
@@ -90,9 +97,10 @@ public class ListaAlunosActivity extends ActionBarActivity {
     public void carregarAlunos() {
         AlunoDAO alunoDAO = new AlunoDAO(this);
         List<Aluno> alunos = alunoDAO.getLista();
-        ArrayAdapter<Aluno> arrayAdapter =
-                new ArrayAdapter<Aluno>(this,android.R.layout.simple_list_item_1,alunos);
-        listViewAlunos.setAdapter(arrayAdapter);
+        //ArrayAdapter<Aluno> arrayAdapter =
+            //    new ArrayAdapter<Aluno>(this,android.R.layout.simple_list_item_1,alunos);
+        ListAdapter adapter = new AlunoAdapterForListView(getLayoutInflater(),alunos);
+        listViewAlunos.setAdapter(adapter);
         alunoDAO.close();
     }
 
@@ -233,6 +241,13 @@ public class ListaAlunosActivity extends ActionBarActivity {
         if (id == R.id.action_settings) {
             return true;
         }
+
+        switch (id){
+            case R.id.menu_enviar_notas:
+                new EnviaAlunoTask(this).execute();
+                return true;
+        }
+
 
         return super.onOptionsItemSelected(item);
     }

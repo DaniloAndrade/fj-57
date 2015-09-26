@@ -4,4 +4,18 @@
     tools:context="br.com.caelum.cadastro.ListaAlunosActivity">
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/menu_mapa"
+        android:icon="@drawable/ic_mapa"
+        android:title="Mapa"
+        app:showAsAction="always"/>
+
+    <item android:id="@+id/menu_receber_provas"
+        android:icon="@drawable/ic_receber"
+        android:title="Baixar provas"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/menu_enviar_notas"
+        android:icon="@drawable/ic_enviar"
+        android:title="Enviar notas"
+        app:showAsAction="never"/>
 </menu>
