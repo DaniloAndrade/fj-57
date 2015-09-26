@@ -84,14 +84,14 @@ public class Aluno implements Serializable{
 
     @Override
     public String toString() {
-        return "Aluno{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", telefone='" + telefone + '\'' +
-                ", endereco='" + endereco + '\'' +
-                ", site='" + site + '\'' +
-                ", nota=" + nota +
-                ", email='" + email + '\'' +
+        return "Aluno : {" +
+                "id :" + id +
+                ", nome: '" + nome + '\'' +
+                ", telefone :'" + telefone + '\'' +
+                ", endereco :'" + endereco + '\'' +
+                ", site : '" + site + '\'' +
+                ", nota : " + nota +
+                ", email :'" + email + '\'' +
                 '}';
     }
 
