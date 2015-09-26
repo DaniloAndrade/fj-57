@@ -105,4 +105,15 @@ public class AlunoDAO extends SQLiteOpenHelper{
             adiciona(aluno);
         }
     }
+
+    public boolean isAluno(String fone) {
+        String sql = "SELECT telefone FROM "+ ALUNOS + " WHERE telefone like ";
+        String[] args = {"%"+fone};
+        Cursor cursor = getReadableDatabase().rawQuery(sql, args);
+
+        int total = cursor.getCount();
+        cursor.close();
+
+        return total > 0;
+    }
 }
