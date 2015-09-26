@@ -85,10 +85,10 @@ public class FormularioHelper {
 
         if (localArquivoFoto !=null && !localArquivoFoto.isEmpty()){
             Bitmap imagemFoto = BitmapFactory.decodeFile(localArquivoFoto);
-            Bitmap imagemFotoReduzida = Bitmap.createScaledBitmap(imagemFoto, imagemFoto.getWidth(), 300, true);
+            Bitmap imagemFotoReduzida = Bitmap.createScaledBitmap(imagemFoto, 200, 250, true);
             foto.setImageBitmap(imagemFotoReduzida);
             foto.setTag(localArquivoFoto);
-            foto.setScaleType(ImageView.ScaleType.FIT_XY);
+            //foto.setScaleType(ImageView.ScaleType.FIT_XY);
         }
 
     }
