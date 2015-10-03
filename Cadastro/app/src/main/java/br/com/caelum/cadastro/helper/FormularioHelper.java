@@ -2,6 +2,7 @@ package br.com.caelum.cadastro.helper;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.ThumbnailUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -84,8 +85,9 @@ public class FormularioHelper {
     public void carregarImagem(String localArquivoFoto) {
 
         if (localArquivoFoto !=null && !localArquivoFoto.isEmpty()){
-            Bitmap imagemFoto = BitmapFactory.decodeFile(localArquivoFoto);
-            Bitmap imagemFotoReduzida = Bitmap.createScaledBitmap(imagemFoto, 200, 250, true);
+           // Bitmap imagemFoto = BitmapFactory.decodeFile(localArquivoFoto);
+            Bitmap imagemFotoReduzida = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(localArquivoFoto), 150, 150);
+           // Bitmap imagemFotoReduzida = Bitmap.createScaledBitmap(imagemFoto, 200, 250, true);
             foto.setImageBitmap(imagemFotoReduzida);
             foto.setTag(localArquivoFoto);
             //foto.setScaleType(ImageView.ScaleType.FIT_XY);

@@ -3,6 +3,7 @@ package br.com.caelum.cadastro.adapter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.ThumbnailUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,8 +61,12 @@ public class AlunoAdapterForListView extends BaseAdapter {
         String caminhoFoto = aluno.getCaminhoFoto();
         Bitmap fotoAluno = null;
         if(caminhoFoto!=null && !caminhoFoto.isEmpty()) {
-           fotoAluno = BitmapFactory.decodeFile(caminhoFoto);
-            fotoAluno = Bitmap.createScaledBitmap(fotoAluno,150,250,true);
+            fotoAluno = BitmapFactory.decodeFile(caminhoFoto);
+            fotoAluno = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(caminhoFoto), 150, 150);
+            //fotoAluno = Bitmap.createScaledBitmap(fotoAluno,150,250,true);
+
+
+
         }else {
             fotoAluno = BitmapFactory
                     .decodeResource(context.getResources(), R.drawable.ic_no_image);
