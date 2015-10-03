@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import java.util.Arrays;
 
+import br.com.caelum.cadastro.ProvasActivity;
 import br.com.caelum.cadastro.R;
 import br.com.caelum.cadastro.modelo.Prova;
 
@@ -71,6 +73,8 @@ public class ListaProvasFragment extends Fragment {
 
                 Prova prova = (Prova) parent.getItemAtPosition(position);
                 Toast.makeText(getActivity(),"Prova selecionada: " + prova,Toast.LENGTH_LONG).show();
+                ProvasActivity activity = (ProvasActivity) getActivity();
+                activity.selecionaProva(prova);
             }
         });
     }
