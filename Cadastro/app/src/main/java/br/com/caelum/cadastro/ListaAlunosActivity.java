@@ -252,6 +252,10 @@ public class ListaAlunosActivity extends ActionBarActivity {
                 startActivity(intent);
                 return true;
 
+            case R.id.menu_mapa:
+                Intent verAlunosMapa = new Intent(this, MostrarAlunosActivity.class);
+                startActivity(verAlunosMapa);
+                return true;
         }
 
 

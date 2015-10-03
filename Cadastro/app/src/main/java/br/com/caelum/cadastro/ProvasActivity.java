@@ -51,7 +51,8 @@ public class ProvasActivity extends ActionBarActivity {
                 DetalhesProvaFragment detalhesProvaFragment = new DetalhesProvaFragment();
                 detalhesProvaFragment.setArguments(bundle);
 
-                fragmentTransaction.replace(R.id.provas_view, detalhesProvaFragment);
+                fragmentTransaction.replace(R.id.provas_view, detalhesProvaFragment)
+                .addToBackStack(null);
                 fragmentTransaction.commit();
             }
         },
@@ -63,6 +64,7 @@ public class ProvasActivity extends ActionBarActivity {
                 fragmentTransaction
                         .replace(R.id.provas_lista, new ListaProvasFragment())
                         .replace(R.id.provas_detalhes, new DetalhesProvaFragment());
+
                 fragmentTransaction.commit();
             }
 
@@ -76,6 +78,8 @@ public class ProvasActivity extends ActionBarActivity {
                 DetalhesProvaFragment detalhesProvaFragment = (DetalhesProvaFragment)
                         supportFragmentManager.findFragmentById(R.id.provas_detalhes);
                 detalhesProvaFragment.populaCamposComDados(prova);
+
+
 
 
             }
