@@ -246,6 +246,12 @@ public class ListaAlunosActivity extends ActionBarActivity {
             case R.id.menu_enviar_notas:
                 new EnviaAlunoTask(this).execute();
                 return true;
+
+            case R.id.menu_receber_provas:
+                Intent intent = new Intent(this, ProvasActivity.class);
+                startActivity(intent);
+                return true;
+
         }
 
 
