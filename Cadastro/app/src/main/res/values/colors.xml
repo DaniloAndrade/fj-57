@@ -2,4 +2,5 @@
 <resources>
     <color name="linha_par">#97CBE2</color>
     <color name="linha_impar">#76BDDD</color>
+    <color name="fab_color_red">#fa0101</color>
 </resources>
