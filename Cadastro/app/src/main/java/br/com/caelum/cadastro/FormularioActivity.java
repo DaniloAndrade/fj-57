@@ -3,18 +3,15 @@ package br.com.caelum.cadastro;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
-import android.provider.MediaStore;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import java.io.File;
-import java.io.Serializable;
 
 import br.com.caelum.cadastro.dao.AlunoDAO;
 import br.com.caelum.cadastro.helper.FormularioHelper;
@@ -54,7 +51,6 @@ public class FormularioActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_formulario, menu);
         return true;
     }
@@ -63,8 +59,6 @@ public class FormularioActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.menu_formulario_ok:
-
-
                 if(helper.estaValido()){
                     AlunoDAO alunoDAO = new AlunoDAO(this);
                     Aluno aluno = helper.pegaAlunoDoFormulario();
@@ -75,12 +69,7 @@ public class FormularioActivity extends AppCompatActivity {
                 } else{
                     helper.mostrarErros();
                 }
-
-
-
-
                 return false;
-
             default:
                 return super.onOptionsItemSelected(item);
         }

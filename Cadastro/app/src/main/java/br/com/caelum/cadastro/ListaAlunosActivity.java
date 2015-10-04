@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -12,25 +11,21 @@ import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import br.com.caelum.cadastro.adapter.AlunoAdapterForListView;
-import br.com.caelum.cadastro.context.action.ContextActionBar;
-import br.com.caelum.cadastro.converter.AlunoConverter;
 import br.com.caelum.cadastro.dao.AlunoDAO;
 import br.com.caelum.cadastro.modelo.Aluno;
-import br.com.caelum.cadastro.support.WebClient;
 import br.com.caelum.cadastro.tasks.EnviaAlunoTask;
 
-import static android.widget.AdapterView.*;
+import static android.widget.AdapterView.AdapterContextMenuInfo;
+import static android.widget.AdapterView.OnItemClickListener;
+import static android.widget.AdapterView.OnItemLongClickListener;
 
 
 public class ListaAlunosActivity extends AppCompatActivity {
@@ -77,13 +72,6 @@ public class ListaAlunosActivity extends AppCompatActivity {
         listViewAlunos.setOnItemLongClickListener(new OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-//                Aluno alunoSelecionado = (Aluno) parent.getItemAtPosition(position);
-//                Log.i("CLICK LONGO ITEM LIST", "Clicou longo no aluno: " + alunoSelecionado.toString());
-//                Toast.makeText(
-//                        ListaAlunosActivity.this, "Clicou longo no aluno: " + alunoSelecionado.toString(),
-//                        Toast.LENGTH_SHORT).show();
-
-
                 return false;
             }
         });
@@ -98,8 +86,6 @@ public class ListaAlunosActivity extends AppCompatActivity {
     public void carregarAlunos() {
         AlunoDAO alunoDAO = new AlunoDAO(this);
         List<Aluno> alunos = alunoDAO.getLista();
-        //ArrayAdapter<Aluno> arrayAdapter =
-            //    new ArrayAdapter<Aluno>(this,android.R.layout.simple_list_item_1,alunos);
         ListAdapter adapter = new AlunoAdapterForListView(getLayoutInflater(),alunos);
         listViewAlunos.setAdapter(adapter);
         alunoDAO.close();
@@ -152,12 +138,6 @@ public class ListaAlunosActivity extends AppCompatActivity {
         });
 
         configuraListenerParaDeletar(aluno, deletar);
-
-
-
-
-
-
 
     }
 
@@ -226,19 +206,14 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_lista_alunos, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -258,8 +233,6 @@ public class ListaAlunosActivity extends AppCompatActivity {
                 startActivity(verAlunosMapa);
                 return true;
         }
-
-
         return super.onOptionsItemSelected(item);
     }
 }

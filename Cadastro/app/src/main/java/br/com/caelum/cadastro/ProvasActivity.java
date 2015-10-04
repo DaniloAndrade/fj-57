@@ -3,7 +3,6 @@ package br.com.caelum.cadastro;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 
 import br.com.caelum.cadastro.fragment.DetalhesProvaFragment;
@@ -23,8 +22,6 @@ public class ProvasActivity extends AppCompatActivity {
                 .valueOf(getResources().getString(R.string.tipo_dispositivo));
 
         tipoDispositivo.configuraFragment(this);
-
-
     }
 
     public void selecionaProva(Prova prova) {
@@ -74,15 +71,9 @@ public class ProvasActivity extends AppCompatActivity {
                 FragmentManager supportFragmentManager = provasActivity
                         .getSupportFragmentManager();
 
-
-
                 DetalhesProvaFragment detalhesProvaFragment = (DetalhesProvaFragment)
                         supportFragmentManager.findFragmentById(R.id.provas_detalhes);
                 detalhesProvaFragment.populaCamposComDados(prova);
-
-
-
-
             }
 
 
