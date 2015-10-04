@@ -28,7 +28,7 @@ public class FormularioHelper {
     private final EditText telefone;
     private final EditText nome;
     private final ImageView foto;
-    private final Button fotoButton;
+    private final ImageView fotoButton;
 
     public FormularioHelper(FormularioActivity formularioActivity) {
         this.formularioActivity = formularioActivity;
@@ -37,7 +37,7 @@ public class FormularioHelper {
         endereco = (EditText) formularioActivity.findViewById(R.id.formulario_endereco);
         email = (EditText) formularioActivity.findViewById(R.id.formulario_email);
         foto = (ImageView) formularioActivity.findViewById(R.id.formulario_foto);
-        fotoButton = (Button) formularioActivity.findViewById(R.id.formulario_foto_button);
+        fotoButton = (ImageView) formularioActivity.findViewById(R.id.formulario_foto_button);
 
         site = (EditText) formularioActivity.findViewById(R.id.formulario_site);
         nota = (RatingBar) formularioActivity.findViewById(R.id.formulario_nota);
@@ -78,7 +78,7 @@ public class FormularioHelper {
         aluno = alunoSelecionado;
     }
 
-    public Button getFotoButton() {
+    public ImageView getFotoButton() {
         return fotoButton;
     }
 
