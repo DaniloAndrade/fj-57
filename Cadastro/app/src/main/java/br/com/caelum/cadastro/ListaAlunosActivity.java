@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -32,7 +33,7 @@ import br.com.caelum.cadastro.tasks.EnviaAlunoTask;
 import static android.widget.AdapterView.*;
 
 
-public class ListaAlunosActivity extends ActionBarActivity {
+public class ListaAlunosActivity extends AppCompatActivity {
 
     public static final String ALUNO_SELECIONADO = "alunoSelecionado";
     private ListView listViewAlunos;

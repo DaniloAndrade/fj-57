@@ -3,6 +3,7 @@ package br.com.caelum.cadastro;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -20,7 +21,7 @@ import br.com.caelum.cadastro.adapter.AlunoAdapter;
 import br.com.caelum.cadastro.dao.AlunoDAO;
 import br.com.caelum.cadastro.modelo.Aluno;
 
-public class ListaAlunosRecyclerActivity extends ActionBarActivity {
+public class ListaAlunosRecyclerActivity extends AppCompatActivity {
 
     private ListView listViewAlunos;
     private RecyclerView recyclerView;

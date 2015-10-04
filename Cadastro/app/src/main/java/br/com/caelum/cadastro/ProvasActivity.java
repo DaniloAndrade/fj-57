@@ -4,12 +4,13 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 
 import br.com.caelum.cadastro.fragment.DetalhesProvaFragment;
 import br.com.caelum.cadastro.fragment.ListaProvasFragment;
 import br.com.caelum.cadastro.modelo.Prova;
 
-public class ProvasActivity extends ActionBarActivity {
+public class ProvasActivity extends AppCompatActivity {
 
     private TipoDispositivo tipoDispositivo;
 

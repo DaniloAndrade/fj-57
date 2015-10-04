@@ -2,10 +2,11 @@ package br.com.caelum.cadastro;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 
 import br.com.caelum.cadastro.fragment.MapFragment;
 
-public class MostrarAlunosActivity extends ActionBarActivity {
+public class MostrarAlunosActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
